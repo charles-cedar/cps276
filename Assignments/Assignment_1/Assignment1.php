@@ -26,7 +26,7 @@
                     <input type="text" class="form-control" id="lastnameBox" placeholder="Last name">
                 </div>
             </div>
-
+           
             <!-- Second row -->
             <div class="row" style="padding-top: 20px">
                 <div class="col-12">
