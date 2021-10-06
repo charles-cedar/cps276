@@ -11,9 +11,7 @@ $i=0;
 while($i<3){
 
 	$parOutput.= "<p> $parText</p>";
-	//$parOutput.= "\n";
-
-
+	
 	$i++;
 }
 
