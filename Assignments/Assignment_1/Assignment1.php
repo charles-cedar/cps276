@@ -11,12 +11,12 @@
 </head>
 
 <body>
-
+     
     <div class="container" style="padding: 50px">
         <form method="POST" action="#">
             
            <!-- first row -->
-            <div class="row">
+            <div class="row" >
                 <div class="col">
                     <label for="firstnameBox" class="form-label">First Name</label>
                     <input type="text" class="form-control" id="firstnameBox" placeholder="First name">

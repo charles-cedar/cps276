@@ -24,7 +24,7 @@ for($i=1; $i<=$mainListItems; $i++){
     $output .= "</ul>";
 
 } 
-$output .= "</ul>";
+$output .=  "</ul>";
 
 
 

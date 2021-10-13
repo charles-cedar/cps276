@@ -5,7 +5,7 @@ class Calculator{
 function calc($operator =null, $num1 =null, $num2 =null){
 
         if($operator===null or $num1 ===null or $num2 === null){
-            return("You must enter a string and two numbers <br>");
+            return("You must enter a string and two numbers  <br>");
          }
 
         if($operator === "/"){

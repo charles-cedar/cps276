@@ -42,7 +42,7 @@ for($i=1; $i<=$rows; $i++){
 </head>
 <body>
     
-<table border="3"; style="padding: 5px">
+<table border="3"; style="padding: 5px ">
 
 <?php echo $tableOutput ?>
 
