@@ -29,10 +29,10 @@ if (count($_POST) > 0) {
 <div style="padding: 50px;">
         <h1>File and Directory Assignment</h1>
         <p>Enter a folder name and the contents of a file.  Folder names should contain alpha numeric characters only.</p>
+
     <div class="mb-3" style="padding-bottom: 10px; padding-top: 10px;">
     <?php echo $output ?>
     </div >
-
 
         <form action="fileAndDirForm.php" method="post">
         
