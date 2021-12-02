@@ -1,11 +1,14 @@
 <?php
 require_once 'classes/Pdo_methods.php';
-
+require_once('classes/StickyForm.php');
+$stickyForm = new StickyForm();
 
 function init()
 {
 
   global $output;
+  global $elementsArr, $stickyForm;
+
 
 
   function login($post)
@@ -47,19 +50,70 @@ function init()
 
 
   if (isset($_POST['login'])) {
-    $output = login($_POST);
-    if ($output === 'success') {
-      header('Location: index.php?page=welcome');
-    } else {
-      header('Location: index.php?page=login');
+    $postArr = $stickyForm->validateForm($_POST, $elementsArr);
+
+    if($postArr['masterStatus']['status'] == "noerrors"){
       
+      $output = login($_POST);
+      if ($output === 'success') {
+        header('Location: index.php?page=welcome');
+       } else{
+      /* IF THERE WAS A PROBLEM WITH THE FORM VALIDATION THEN THE MODIFIED ARRAY ($postArr) WILL BE SENT AS THE SECOND PARAMETER.  THIS MODIFIED ARRAY IS THE SAME AS THE ELEMENTS ARRAY BUT ERROR MESSAGES AND VALUES HAVE BEEN ADDED TO DISPLAY ERRORS AND MAKE IT STICKY */
+      echo "login failed";
+      return getForm("",$postArr);
     }
+
+
+  /*       $output = login($_POST);
+        if ($output === 'success') {
+          header('Location: index.php?page=welcome');
+        } else {
+          header('Location: index.php?page=login');
+          
+        } */
+
+      }else{
+        return getForm("",$postArr);
+        //echo "there was an error";
+      }
+
+  }else{
+    $emptyArray = [];
+    //echo "No sumbmit button click";
+    return getForm("", $elementsArr);
   }
+}
 
 
+  $elementsArr = [
+    "masterStatus"=>[
+      "status"=>"noerrors",
+      "type"=>"masterStatus"
+    ],
+     
+    "email"=>["errorMessage"=>"<span style='color: red; margin-left: 15px;'>Email cannot be blank and must be in proper format</span>",
+      "errorOutput"=>"",
+      "type"=>"text",
+      "value"=>"elixey@test.com",
+      "regex"=>"email"
+    ],
+  
+    "password"=>[
+      "errorMessage"=>"<span style='color: red; margin-left: 15px;'>Password cannot be blank and must be in proper format</span>",
+      "errorOutput"=>"",
+      "type"=>"text",
+      "value"=>"password",
+      "regex"=>"password"
+    ],
+  
+   
+  ];
 
 
+  function getForm($acknowledgement, $elementsArr){
+  global $output;
   $acknowledgement = "";
+
   $form = <<<HTML
 
 <div style="margin:20px">
@@ -72,16 +126,16 @@ function init()
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" name="email" value="myemail@email.com">
+          <label for="email">Email address{$elementsArr['email']['errorOutput']}</label>
+      <input type="email" class="form-control" id="email" name="email" value="{$elementsArr['email']['value']}" >
           </div>
         </div>
       </div>
       <div class="row">
         <div class="col-md-6">
           <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" name="password" value="password">
+          <label for="password">Password {$elementsArr['password']['errorOutput']}</label>
+      <input type="password" class="form-control" id="password" name="password" value="{$elementsArr['password']['value']}" >
           </div>
         </div>
       </div>
@@ -101,3 +155,4 @@ HTML;
 
   return [$acknowledgement, $form];
 }
+
